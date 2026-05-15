@@ -148,9 +148,86 @@ public:
     }
 };
 
-
 int main(){
+    //For checking Radix-2
     int n = 8;
+    
+    vector<complex<double>> data(n);
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_real_distribution<> dis(-1.0, 1.0);
+    for (auto& c : data) {
+        c = complex<double>(dis(gen), dis(gen));
+    }
+
+    vector<complex<double>> original_data = data;
+
+    FastFFT::fft(data, false);
+
+    cout << "\nTransformed data:\n";
+    for (const auto& c : data)
+        cout << c << "\n";
+
+    FastFFT::fft(data, true);
+
+    double error_sum = 0.0;
+    for (size_t i = 0; i < n; ++i) {
+        error_sum += norm(original_data[i] - data[i]);
+    }
+    double mse = error_sum / n;
+
+    cout << "Original data:\n";
+    for (const auto& c : original_data)
+        cout << c << "\n";
+
+    cout << "\nTransformed back data:\n";
+    for (const auto& c : data)
+        cout << c << "\n";
+    cout << "\nError sum:\n";
+    cout << mse;
+    return 0;
+
+
+    //For checking Radix-3
+    int n = 9;
+    
+    vector<complex<double>> data(n);
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_real_distribution<> dis(-1.0, 1.0);
+    for (auto& c : data) {
+        c = complex<double>(dis(gen), dis(gen));
+    }
+
+    vector<complex<double>> original_data = data;
+
+    FastFFT::fft(data, false);
+
+    cout << "\nTransformed data:\n";
+    for (const auto& c : data)
+        cout << c << "\n";
+
+    FastFFT::fft(data, true);
+
+    double error_sum = 0.0;
+    for (size_t i = 0; i < n; ++i) {
+        error_sum += norm(original_data[i] - data[i]);
+    }
+    double mse = error_sum / n;
+
+    cout << "Original data:\n";
+    for (const auto& c : original_data)
+        cout << c << "\n";
+
+    cout << "\nTransformed back data:\n";
+    for (const auto& c : data)
+        cout << c << "\n";
+    cout << "\nError sum:\n";
+    cout << mse;
+    return 0;
+
+    //For checking Radix-5
+    int n = 25;
     
     vector<complex<double>> data(n);
     random_device rd;
